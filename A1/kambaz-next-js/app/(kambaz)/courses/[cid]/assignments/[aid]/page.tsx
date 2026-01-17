@@ -115,6 +115,14 @@ export default function AssignmentEditor() {
               <input type="date" id="wd-available-until" />
             </td>
           </tr>
+
+          <tr>
+            <td></td>
+            <td>
+              <button>Cancel</button>
+              <button>Save</button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
