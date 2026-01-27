@@ -36,6 +36,18 @@ export default function Modules() {
               Learn what is Web Development
               <LessonControlButtons />
             </ListGroupItem>
+
+            <ListGroupItem className="wd-lesson p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" />
+              LESSON 1
+              <LessonControlButtons />
+            </ListGroupItem>
+
+            <ListGroupItem className="wd-lesson p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" />
+              LESSON 2
+              <LessonControlButtons />
+            </ListGroupItem>
           </ListGroup>
         </ListGroupItem>
 
