@@ -1,0 +1,105 @@
+/* Base */
+body {
+  margin: 0;
+  padding: 0;
+}
+body * {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Layout offset */
+@media (min-width: 768px) {
+  #wd-kambaz .wd-main-content-offset {
+    padding-left: 140px !important;
+  }
+}
+
+/* Bootstrap overrides */
+.btn-secondary {
+  --bs-btn-color: #000 !important;
+  --bs-btn-bg: #c7cdd1 !important;
+  --bs-btn-border-color: #c7cdd1 !important;
+  --bs-btn-hover-color: #fff !important;
+}
+.bg-secondary {
+  --bs-secondary-rgb: 199, 205, 209;
+}
+.list-group-item {
+  --bs-list-group-border-color: gray;
+}
+
+/* Modules */
+.wd-lesson {
+  border-left: 3px solid green !important;
+}
+
+/* Course title */
+#wd-course-title {
+  color: black;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+#wd-course-title svg {
+  color: black;
+}
+
+/* Kambaz nav */
+#wd-kambaz-navigation {
+  background-color: black;
+}
+#wd-kambaz-navigation .list-group-item {
+  background-color: black;
+  border: 0;
+  padding: 12px 0;
+}
+#wd-kambaz-navigation .list-group-item a {
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+#wd-kambaz-navigation .list-group-item.active {
+  background-color: white !important;
+  border-left: 4px solid red !important;
+}
+#wd-kambaz-navigation .list-group-item.active a {
+  color: red !important;
+}
+
+/* Course nav */
+#wd-course-navigation .list-group-item {
+  border: none;
+  padding: 6px 12px;
+  background: transparent;
+}
+#wd-course-navigation .wd-course-link {
+  color: red;
+  text-decoration: none;
+  font-weight: 500;
+  display: block;
+}
+#wd-course-navigation .wd-course-link:hover {
+  text-decoration: underline;
+}
+#wd-course-navigation .list-group-item.active {
+  background: white !important;
+  border-left: 4px solid black !important;
+}
+#wd-course-navigation .list-group-item.active .wd-course-nav-link {
+  color: black !important;
+  font-weight: 600;
+}
+
+/* Dashboard cards */
+.wd-dashboard-course-link {
+  color: black;
+  text-decoration: none;
+  font-weight: 500;
+}
+.wd-dashboard-course-link:hover {
+  text-decoration: underline;
+  color: black;
+}
+.wd-dashboard-course-description {
+  color: #555;
+  pointer-events: none;
+}
