@@ -13,8 +13,7 @@ export default function AssignmentEditor() {
   const openPicker = (ref: React.RefObject<HTMLInputElement | null>) => {
     const el = ref.current;
     if (!el) return;
-    // modern browsers
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  
     const anyEl = el as any;
     if (typeof anyEl.showPicker === "function") anyEl.showPicker();
     else el.click();
@@ -23,13 +22,11 @@ export default function AssignmentEditor() {
   return (
     <div id="wd-assignments-editor">
       <Form>
-        {/* Name */}
         <Form.Group className="mb-3" controlId="wd-name">
           <Form.Label>Assignment Name</Form.Label>
           <Form.Control defaultValue="A1 - ENV + HTML" />
         </Form.Group>
 
-        {/* Description */}
         <Form.Group className="mb-4" controlId="wd-description">
           <Form.Control
             as="textarea"
@@ -38,7 +35,6 @@ export default function AssignmentEditor() {
           />
         </Form.Group>
 
-        {/* Points */}
         <Row className="mb-3 align-items-center">
           <Col md={3} className="text-md-end">
             <Form.Label htmlFor="wd-points" className="mb-0">
@@ -50,7 +46,6 @@ export default function AssignmentEditor() {
           </Col>
         </Row>
 
-        {/* Assignment Group */}
         <Row className="mb-3 align-items-center">
           <Col md={3} className="text-md-end">
             <Form.Label htmlFor="wd-assignment-group" className="mb-0">
@@ -67,7 +62,6 @@ export default function AssignmentEditor() {
           </Col>
         </Row>
 
-        {/* Display Grade */}
         <Row className="mb-4 align-items-center">
           <Col md={3} className="text-md-end">
             <Form.Label htmlFor="wd-display-grade-as" className="mb-0">
@@ -82,7 +76,6 @@ export default function AssignmentEditor() {
           </Col>
         </Row>
 
-        {/* Submission Type */}
         <Row className="mb-4">
           <Col md={3} className="text-md-end">
             <Form.Label htmlFor="wd-submission-type" className="mb-0">
@@ -117,7 +110,6 @@ export default function AssignmentEditor() {
           </Col>
         </Row>
 
-        {/* Assign box */}
         <Row className="mb-4">
           <Col md={3} className="text-md-end">
             <Form.Label className="mb-0">Assign</Form.Label>
@@ -125,7 +117,6 @@ export default function AssignmentEditor() {
 
           <Col md={9}>
             <div className="border rounded p-3">
-              {/* Assign to input with chip */}
               <div className="mb-3">
                 <div className="fw-semibold mb-2">Assign to</div>
 
@@ -137,15 +128,12 @@ export default function AssignmentEditor() {
                 </div>
               </div>
 
-              {/* Due (ONE icon, clickable) */}
               <div className="mb-3">
                 <div className="fw-semibold mb-2">Due</div>
 
                 <InputGroup>
-                  {/* visible (no native icon) */}
                   <Form.Control placeholder="mm/dd/yyyy --:-- --" />
 
-                  {/* icon button */}
                   <InputGroup.Text
                     className="bg-light text-dark border"
                     style={{ cursor: "pointer" }}
@@ -155,7 +143,6 @@ export default function AssignmentEditor() {
                   </InputGroup.Text>
                 </InputGroup>
 
-                {/* hidden native picker */}
                 <input
                   ref={dueRef}
                   type="datetime-local"
@@ -170,7 +157,6 @@ export default function AssignmentEditor() {
                 />
               </div>
 
-              {/* Available from + Until (ONE icon each, clickable) */}
               <Row>
                 <Col md={6} className="mb-3 mb-md-0">
                   <div className="fw-semibold mb-2">Available from</div>
@@ -232,7 +218,6 @@ export default function AssignmentEditor() {
           </Col>
         </Row>
 
-        {/* Buttons */}
         <div className="d-flex justify-content-end gap-2">
           <Button variant="secondary">Cancel</Button>
           <Button variant="danger">Save</Button>
