@@ -10,27 +10,55 @@ export default function TOC() {
   return (
     <Nav variant="pills" className="justify-content-center mb-3">
       <NavItem>
-        <NavLink as={Link} href="/labs" active={pathname === "/labs"}>Labs</NavLink>
+        <NavLink
+          as={Link}
+          href="/labs"
+          className={`nav-link ${pathname.endsWith("labs") ? "active" : ""}`}
+        >
+          Labs
+        </NavLink>
       </NavItem>
 
       <NavItem>
-        <NavLink as={Link} href="/labs/lab1" active={pathname === "/labs/lab1"}>Lab 1</NavLink>
+        <NavLink
+          as={Link}
+          href="/labs/lab1"
+          className={`nav-link ${pathname.endsWith("lab1") ? "active" : ""}`}
+        >
+          Lab 1
+        </NavLink>
       </NavItem>
 
       <NavItem>
-        <NavLink as={Link} href="/labs/lab2" active={pathname === "/labs/lab2"}>Lab 2</NavLink>
+        <NavLink
+          as={Link}
+          href="/labs/lab2"
+          className={`nav-link ${pathname.endsWith("lab2") ? "active" : ""}`}
+        >
+          Lab 2
+        </NavLink>
       </NavItem>
 
       <NavItem>
-        <NavLink as={Link} href="/labs/lab3" active={pathname === "/labs/lab3"}>Lab 3</NavLink>
+        <NavLink
+          as={Link}
+          href="/labs/lab3"
+          className={`nav-link ${pathname.endsWith("lab3") ? "active" : ""}`}
+        >
+          Lab 3
+        </NavLink>
       </NavItem>
 
       <NavItem>
-        <NavLink as={Link} href="/">Kambaz</NavLink>
+        <NavLink as={Link} href="/">
+          Kambaz
+        </NavLink>
       </NavItem>
 
       <NavItem>
-        <NavLink href="https://github.com/potatopotato1253/kambaz-next-js-sp26">My GitHub</NavLink>
+        <NavLink href="https://github.com/potatopotato1253/kambaz-next-js-sp26">
+          My GitHub
+        </NavLink>
       </NavItem>
     </Nav>
   );
