@@ -14,25 +14,19 @@ import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
 export default function KambazNavigation() {
   const pathname = usePathname();
 
-  const active = (href: string) =>
-    pathname === href || (href === "/dashboard" && pathname.startsWith("/courses"));
+  const links = [
+    { label: "Account", href: "/account", icon: FaRegCircleUser },
+    { label: "Dashboard", href: "/dashboard", icon: AiOutlineDashboard },
+    { label: "Courses", href: "/dashboard", icon: LiaBookSolid },
+    { label: "Calendar", href: "/calendar", icon: IoCalendarOutline },
+    { label: "Inbox", href: "/inbox", icon: FaInbox },
+    { label: "Labs", href: "/labs", icon: LiaCogSolid },
+  ];
 
-  const itemClass = (href: string) =>
-    active(href)
-      ? "border-0 bg-white text-center"
-      : "border-0 bg-black text-center";
-
-  const linkClass = (href: string) =>
-    active(href)
-      ? "text-danger text-decoration-none d-block"
-      : "text-white text-decoration-none d-block";
-
-  const iconClass = (href: string, isAccount = false) =>
-    active(href)
-      ? "fs-1 text-danger"
-      : isAccount
-        ? "fs-1 text-white"
-        : "fs-1 text-danger";
+  const isActive = (href: string, label: string) => {
+    if (label === "Dashboard" && pathname.startsWith("/courses")) return true;
+    return pathname === href || pathname.startsWith(href + "/") || pathname.includes(label.toLowerCase());
+  };
 
   return (
     <ListGroup
@@ -51,58 +45,31 @@ export default function KambazNavigation() {
       </ListGroupItem>
       <br />
 
-      <ListGroupItem className={itemClass("/account")}>
-        <Link href="/account" id="wd-account-link" className={linkClass("/account")}>
-          <FaRegCircleUser className={iconClass("/account", true)} />
-          <br />
-          Account
-        </Link>
-      </ListGroupItem>
-      <br />
+      {links.map((link) => {
+        const active = isActive(link.href, link.label);
+        const Icon = link.icon;
 
-      <ListGroupItem className={itemClass("/dashboard")}>
-        <Link href="/dashboard" id="wd-dashboard-link" className={linkClass("/dashboard")}>
-          <AiOutlineDashboard className={iconClass("/dashboard")} />
-          <br />
-          Dashboard
-        </Link>
-      </ListGroupItem>
-      <br />
-
-      <ListGroupItem className={itemClass("/courses")}>
-        <Link href="/courses" id="wd-course-link" className={linkClass("/courses")}>
-          <LiaBookSolid className={iconClass("/courses")} />
-          <br />
-          Courses
-        </Link>
-      </ListGroupItem>
-      <br />
-
-      <ListGroupItem className={itemClass("/calendar")}>
-        <Link href="/calendar" id="wd-calendar-link" className={linkClass("/calendar")}>
-          <IoCalendarOutline className={iconClass("/calendar")} />
-          <br />
-          Calendar
-        </Link>
-      </ListGroupItem>
-      <br />
-
-      <ListGroupItem className={itemClass("/inbox")}>
-        <Link href="/inbox" id="wd-inbox-link" className={linkClass("/inbox")}>
-          <FaInbox className={iconClass("/inbox")} />
-          <br />
-          Inbox
-        </Link>
-      </ListGroupItem>
-      <br />
-
-      <ListGroupItem className={itemClass("/labs")}>
-        <Link href="/labs" id="wd-labs-link" className={linkClass("/labs")}>
-          <LiaCogSolid className={iconClass("/labs")} />
-          <br />
-          Labs
-        </Link>
-      </ListGroupItem>
+        return (
+          <ListGroupItem
+            key={link.label}
+            className={`bg-black text-center border-0 ${
+              active ? "bg-white" : ""
+            }`}
+          >
+            <Link
+              href={link.href}
+              className={`text-decoration-none d-block ${
+                active ? "text-danger" : "text-white"
+              }`}
+              id={`wd-${link.label.toLowerCase()}-link`}
+            >
+              <Icon className={`fs-1 ${active ? "text-danger" : "text-danger"}`} />
+              <br />
+              {link.label}
+            </Link>
+          </ListGroupItem>
+        );
+      })}
     </ListGroup>
   );
 }

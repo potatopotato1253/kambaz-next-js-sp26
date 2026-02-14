@@ -1,4 +1,4 @@
-import PeopleTable from "./table/page";
+import PeopleTable from "./Table/page";
 
 export default function PeoplePage() {
   return (
