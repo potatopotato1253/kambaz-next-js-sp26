@@ -1,37 +1,38 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import Link from "next/link";
-import * as db from "../../../database";
+import { useParams } from "next/navigation";
 
 import {
+  Badge,
   Button,
   FormControl,
   InputGroup,
   ListGroup,
   ListGroupItem,
-  Badge,
 } from "react-bootstrap";
 
 import { FaPlus } from "react-icons/fa6";
-import { FaSearch, FaChevronDown } from "react-icons/fa";
+import { FaSearch, FaChevronDown, FaTrash } from "react-icons/fa";
 import { BsGripVertical } from "react-icons/bs";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { LuNotebookPen } from "react-icons/lu";
 
 import GreenCheckmark from "../modules/GreenCheckmark";
 
+
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from "../../../store";
+import { deleteAssignment } from "./reducer"; 
+
 const formatCanvasLike = (iso?: string) => {
   if (!iso) return "";
-
   const d = new Date(iso);
+  const month = d.toLocaleString("en-US", { month: "short" });
+  const day = d.getDate();
 
-  const month = d.toLocaleString("en-US", { month: "short" }); // May
-  const day = d.getDate(); // 6
-
-  let hours = d.getHours(); // 0..23
+  let hours = d.getHours();
   const minutes = d.getMinutes().toString().padStart(2, "0");
-
   const ampm = hours >= 12 ? "pm" : "am";
   hours = hours % 12;
   if (hours === 0) hours = 12;
@@ -41,10 +42,19 @@ const formatCanvasLike = (iso?: string) => {
 
 export default function Assignments() {
   const { cid } = useParams<{ cid: string }>();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const assignmentsForCourse = db.assignments.filter(
-    (a: any) => a.course === cid
+  const { assignments } = useSelector(
+    (state: RootState) => state.assignmentsReducer
   );
+
+  const assignmentsForCourse = assignments.filter((a: any) => a.course === cid);
+
+  const onDelete = (assignmentId: string) => {
+    const ok = window.confirm("Are you sure you want to delete this assignment?");
+    if (!ok) return;
+    dispatch(deleteAssignment(assignmentId));
+  };
 
   return (
     <div id="wd-assignments">
@@ -53,23 +63,21 @@ export default function Assignments() {
           <InputGroup.Text className="bg-white">
             <FaSearch />
           </InputGroup.Text>
-          <FormControl
-            placeholder="Search for Assignments"
-            id="wd-search-assignment"
-          />
+          <FormControl placeholder="Search for Assignments" id="wd-search-assignment" />
         </InputGroup>
 
         <div className="text-nowrap">
-          <Button
-            variant="secondary"
-            className="me-2"
-            id="wd-add-assignment-group"
-          >
+          <Button variant="secondary" className="me-2" id="wd-add-assignment-group">
             <FaPlus className="me-2" /> Group
           </Button>
-          <Button variant="danger" id="wd-add-assignment">
+
+          <Link
+            href={`/courses/${cid}/assignments/new`}
+            className="btn btn-danger"
+            id="wd-add-assignment"
+          >
             <FaPlus className="me-2" /> Assignment
-          </Button>
+          </Link>
         </div>
       </div>
 
@@ -93,10 +101,7 @@ export default function Assignments() {
 
           <ListGroup className="rounded-0">
             {assignmentsForCourse.map((a: any) => (
-              <ListGroupItem
-                key={a._id}
-                className="p-3 border-gray wd-assignment-item"
-              >
+              <ListGroupItem key={a._id} className="p-3 border-gray wd-assignment-item">
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="d-flex align-items-center gap-3">
                     <BsGripVertical className="fs-3 text-secondary" />
@@ -113,22 +118,27 @@ export default function Assignments() {
                       <div className="small">
                         <span className="text-danger">Multiple Modules</span>
                         <span className="text-muted"> | </span>
-
-                        <b>Not available until</b>{" "}
-                        {formatCanvasLike(a.availableFrom)}
-
+                        <b>Not available until</b> {formatCanvasLike(a.availableFrom)}
                         <span className="text-muted"> | </span>
                         <br />
-
                         <b>Due</b> {formatCanvasLike(a.due)}
                         <span className="text-muted"> | </span>
-
                         {a.points ?? 100} pts
                       </div>
                     </div>
                   </div>
 
-                  <div className="d-flex align-items-center gap-2">
+                  <div className="d-flex align-items-center gap-3">
+                    <FaTrash
+                      className="text-danger"
+                      style={{ cursor: "pointer" }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onDelete(a._id);
+                      }}
+                      title="Delete assignment"
+                    />
                     <GreenCheckmark />
                     <IoEllipsisVertical className="fs-4" />
                   </div>
