@@ -60,6 +60,16 @@ export default function TOC() {
       </NavItem>
 
       <NavItem>
+        <NavLink
+          as={Link}
+          href="/labs/lab5"
+          className={`nav-link ${pathname.endsWith("lab5") ? "active" : ""}`}
+        >
+          Lab 5
+        </NavLink>
+      </NavItem>
+
+      <NavItem>
         <NavLink as={Link} href="/">
           Kambaz
         </NavLink>
