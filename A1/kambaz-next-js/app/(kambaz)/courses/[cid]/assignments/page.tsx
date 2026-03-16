@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useEffect } from "react";
 
 import {
   Badge,
@@ -20,10 +21,10 @@ import { LuNotebookPen } from "react-icons/lu";
 
 import GreenCheckmark from "../modules/GreenCheckmark";
 
-
+import * as client from "../../client";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../../store";
-import { deleteAssignment } from "./reducer"; 
+import { deleteAssignment, setAssignments } from "./reducer";
 
 const formatCanvasLike = (iso?: string) => {
   if (!iso) return "";
@@ -48,11 +49,22 @@ export default function Assignments() {
     (state: RootState) => state.assignmentsReducer
   );
 
-  const assignmentsForCourse = assignments.filter((a: any) => a.course === cid);
+  const fetchAssignments = async () => {
+    const assignments = await client.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(assignments));
+  };
 
-  const onDelete = (assignmentId: string) => {
+  useEffect(() => {
+    if (!cid) return;
+    fetchAssignments();
+  }, [cid]);
+
+  const assignmentsForCourse = assignments;
+
+  const onDelete = async (assignmentId: string) => {
     const ok = window.confirm("Are you sure you want to delete this assignment?");
     if (!ok) return;
+    await client.deleteAssignment(assignmentId);
     dispatch(deleteAssignment(assignmentId));
   };
 
@@ -63,7 +75,10 @@ export default function Assignments() {
           <InputGroup.Text className="bg-white">
             <FaSearch />
           </InputGroup.Text>
-          <FormControl placeholder="Search for Assignments" id="wd-search-assignment" />
+          <FormControl
+            placeholder="Search for Assignments"
+            id="wd-search-assignment"
+          />
         </InputGroup>
 
         <div className="text-nowrap">
@@ -101,7 +116,10 @@ export default function Assignments() {
 
           <ListGroup className="rounded-0">
             {assignmentsForCourse.map((a: any) => (
-              <ListGroupItem key={a._id} className="p-3 border-gray wd-assignment-item">
+              <ListGroupItem
+                key={a._id}
+                className="p-3 border-gray wd-assignment-item"
+              >
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="d-flex align-items-center gap-3">
                     <BsGripVertical className="fs-3 text-secondary" />

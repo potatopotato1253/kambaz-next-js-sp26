@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../store";
+import { useDispatch } from "react-redux";
 import { updateAssignment } from "../reducer";
+import * as client from "../../../client";
 
 import { Button, Col, Form, Row } from "react-bootstrap";
 
@@ -13,22 +13,23 @@ export default function AssignmentEditor() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { assignments } = useSelector(
-    (state: RootState) => state.assignmentsReducer
-  );
-
-  const found = assignments.find((a: any) => a._id === aid && a.course === cid);
-
   const [assignment, setAssignment] = useState<any>(null);
 
+  const fetchAssignment = async () => {
+    const found = await client.findAssignmentById(aid);
+    setAssignment(found);
+  };
+
   useEffect(() => {
-    setAssignment(found ?? null);
-  }, [aid, cid, found]);
+    if (!aid) return;
+    fetchAssignment();
+  }, [aid]);
 
   if (!assignment) return <div id="wd-assignments-editor">Assignment not found.</div>;
 
-  const save = () => {
-    dispatch(updateAssignment(assignment));
+  const save = async () => {
+    const updated = await client.updateAssignment(assignment);
+    dispatch(updateAssignment(updated));
     router.push(`/courses/${cid}/assignments`);
   };
 
@@ -46,7 +47,9 @@ export default function AssignmentEditor() {
           <Form.Label>Assignment Name</Form.Label>
           <Form.Control
             value={assignment.title}
-            onChange={(e) => setAssignment({ ...assignment, title: e.target.value })}
+            onChange={(e) =>
+              setAssignment({ ...assignment, title: e.target.value })
+            }
           />
         </Form.Group>
 
@@ -88,7 +91,9 @@ export default function AssignmentEditor() {
                 <Form.Control
                   type="datetime-local"
                   value={assignment.due ?? ""}
-                  onChange={(e) => setAssignment({ ...assignment, due: e.target.value })}
+                  onChange={(e) =>
+                    setAssignment({ ...assignment, due: e.target.value })
+                  }
                 />
               </div>
 
@@ -99,7 +104,10 @@ export default function AssignmentEditor() {
                     type="datetime-local"
                     value={assignment.availableFrom ?? ""}
                     onChange={(e) =>
-                      setAssignment({ ...assignment, availableFrom: e.target.value })
+                      setAssignment({
+                        ...assignment,
+                        availableFrom: e.target.value,
+                      })
                     }
                   />
                 </Col>
@@ -110,7 +118,10 @@ export default function AssignmentEditor() {
                     type="datetime-local"
                     value={assignment.availableUntil ?? ""}
                     onChange={(e) =>
-                      setAssignment({ ...assignment, availableUntil: e.target.value })
+                      setAssignment({
+                        ...assignment,
+                        availableUntil: e.target.value,
+                      })
                     }
                   />
                 </Col>
