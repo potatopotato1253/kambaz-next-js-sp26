@@ -81,22 +81,22 @@ export default function Dashboard() {
   };
 
   const onEnroll = async (courseId: string) => {
-    try {
-      await client.enrollInCourse(courseId);
-      await fetchAllData();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  try {
+    await client.enrollInCourse("current", courseId);
+    await fetchAllData();
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-  const onUnenroll = async (courseId: string) => {
-    try {
-      await client.unenrollFromCourse(courseId);
-      await fetchAllData();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+const onUnenroll = async (courseId: string) => {
+  try {
+    await client.unenrollFromCourse("current", courseId);
+    await fetchAllData();
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   useEffect(() => {
     if (currentUser) {
