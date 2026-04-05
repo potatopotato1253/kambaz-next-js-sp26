@@ -5,6 +5,7 @@ const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER?.replace(/\/$/, "");
 const COURSES_API = `${HTTP_SERVER}/api/courses`;
 const USERS_API = `${HTTP_SERVER}/api/users`;
 const MODULES_API = `${HTTP_SERVER}/api/modules`;
+const QUIZZES_API = `${HTTP_SERVER}/api/quizzes`;
 
 export const fetchAllCourses = async () => {
   const { data } = await axios.get(COURSES_API);
@@ -79,6 +80,31 @@ export const updateAssignment = async (assignment: any) => {
 
 export const deleteAssignment = async (assignmentId: string) => {
   const response = await axios.delete(`${HTTP_SERVER}/api/assignments/${assignmentId}`);
+  return response.data;
+};
+
+export const findQuizzesForCourse = async (courseId: string) => {
+  const response = await axios.get(`${COURSES_API}/${courseId}/quizzes`);
+  return response.data;
+};
+
+export const findQuizById = async (quizId: string) => {
+  const response = await axios.get(`${QUIZZES_API}/${quizId}`);
+  return response.data;
+};
+
+export const createQuiz = async (courseId: string, quiz: any) => {
+  const response = await axios.post(`${COURSES_API}/${courseId}/quizzes`, quiz);
+  return response.data;
+};
+
+export const updateQuiz = async (quiz: any) => {
+  const response = await axios.put(`${QUIZZES_API}/${quiz._id}`, quiz);
+  return response.data;
+};
+
+export const deleteQuiz = async (quizId: string) => {
+  const response = await axios.delete(`${QUIZZES_API}/${quizId}`);
   return response.data;
 };
 

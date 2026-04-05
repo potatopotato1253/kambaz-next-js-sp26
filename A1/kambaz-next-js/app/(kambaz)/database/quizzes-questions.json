@@ -1,0 +1,53 @@
+[
+  {
+  "_id": "Q201",
+  "course": "RS102",
+  "title": "Q1 - HTML",
+  "description": "Intro HTML quiz",
+  "quizType": "Graded Quiz",
+  "assignmentGroup": "Quizzes",
+  "points": 29,
+  "shuffleAnswers": true,
+  "timeLimit": 20,
+  "multipleAttempts": false,
+  "howManyAttempts": 1,
+  "showCorrectAnswers": "Always",
+  "accessCode": "",
+  "oneQuestionAtATime": true,
+  "webcamRequired": false,
+  "lockQuestionsAfterAnswering": false,
+  "dueDate": "2026-04-18T23:59:00.000Z",
+  "availableDate": "2026-04-10T08:00:00.000Z",
+  "untilDate": "2026-04-20T23:59:00.000Z",
+  "published": false,
+  "questions": [
+    {
+      "_id": "QQ201",
+      "type": "Multiple Choice",
+      "title": "Question 1",
+      "points": 10,
+      "question": "What does HTML stand for?",
+      "choices": [
+        { "text": "HyperText Markup Language", "correct": true },
+        { "text": "HighText Markdown Language", "correct": false },
+        { "text": "Home Tool Markup Language", "correct": false }
+      ]
+    },
+    {
+      "_id": "QQ202",
+      "type": "True/False",
+      "title": "Question 2",
+      "points": 9,
+      "question": "HTML is a programming language.",
+      "answer": false
+    },
+    {
+      "_id": "QQ203",
+      "type": "Fill in the Blank",
+      "title": "Question 3",
+      "points": 10,
+      "question": "HTML stands for ______.",
+      "answers": ["HyperText Markup Language", "hypertext markup language"]
+    }
+  ]}
+]
