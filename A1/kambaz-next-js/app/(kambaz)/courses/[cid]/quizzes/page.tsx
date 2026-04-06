@@ -96,7 +96,12 @@ export default function QuizzesPage() {
   const fetchQuizzes = async () => {
     if (!cid) return;
     const data = await client.findQuizzesForCourse(cid);
-    setQuizzes(data);
+
+    const visibleQuizzes = isFaculty
+      ? data
+      : data.filter((quiz: Quiz) => quiz.published);
+
+    setQuizzes(visibleQuizzes);
   };
 
   useEffect(() => {

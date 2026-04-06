@@ -126,3 +126,18 @@ export const findUsersForCourse = async (courseId: string) => {
   const response = await axios.get(`${COURSES_API}/${courseId}/users`);
   return response.data;
 };
+
+export const submitQuizAttempt = async (quizId: string, attempt: any) => {
+  const response = await axios.post(`${HTTP_SERVER}/api/quizzes/${quizId}/attempts`, attempt);
+  return response.data;
+};
+
+export const findLastQuizAttempt = async (quizId: string, userId: string) => {
+  const response = await axios.get(`${HTTP_SERVER}/api/quizzes/${quizId}/attempts/user/${userId}/last`);
+  return response.data;
+};
+
+export const countQuizAttempts = async (quizId: string, userId: string) => {
+  const response = await axios.get(`${HTTP_SERVER}/api/quizzes/${quizId}/attempts/user/${userId}/count`);
+  return response.data;
+};
